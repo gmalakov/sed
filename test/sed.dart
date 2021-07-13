@@ -11,7 +11,7 @@ Future<void> main(List<String> args) async {
   while (i < args.length) {
     args[i] = args[i].trim();
     if(args[i].toLowerCase() == editStr) editFile = true;
-     else if (args[i].startsWith('s/') && args[i].contains('/')) {
+     else if (args[i].startsWith('s/')) {
        ///Deal with substitution here (We don't need the first '/s'
        final l = args[i].substring(2).split('/');
        if (l.length < 2)
