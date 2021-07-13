@@ -1,0 +1,29 @@
+#!/bin/sh
+
+version=<version>
+platform=linux
+
+arch_raw=`uname -m`
+architecture="${arch_raw%\\r}" #Strip \r from string
+
+case $architecture in
+  'i686')
+    architecture='ia32';;
+  'x86_64')
+    architecture='x64';;
+  'armv7l')
+    architecture='arm';;
+  'armv8') #Needs confirmation
+    architecture='arm64';;
+  *)
+    echo Unknown architecture: $architecture
+    exit 1;;
+esac
+
+link=https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-${platform}-${architecture}-release.zip
+wget --no-check-certificate $link
+unzip dartsdk-${platform}-${architecture}-release.zip dart-sdk/bin/dart
+mv dart-sdk/bin/dart ./dart-$version
+chmod 755 dart-$version
+rm -rf dart-sdk
+rm dartsdk-${platform}-${architecture}-release.zip
